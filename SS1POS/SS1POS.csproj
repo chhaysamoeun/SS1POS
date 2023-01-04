@@ -16,6 +16,8 @@
     <None Remove="Data\" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="Views\Product\" />
+    <None Remove="DTO\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.1" />
@@ -34,5 +36,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="DTO\" />
+    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Uploads\" />
   </ItemGroup>
 </Project>
