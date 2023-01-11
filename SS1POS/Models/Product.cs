@@ -16,6 +16,9 @@ namespace SS1POS.Models
 		public string Image { get; set; }
 		public double Price { get; set; }
 		public int Qty { get; set; }
+		[Required]
+		[MaxLength(20)]
+		public string Barcode { get; set; }
 
 		public Category Category { get; set; }
 	}

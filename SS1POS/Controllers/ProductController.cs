@@ -35,7 +35,8 @@ namespace SS1POS.Controllers
                               Price= p.Price,
                               ProductId= p.ProductId,
                               ProductName= p.ProductName,
-                              Qty= p.Qty
+                              Qty= p.Qty,
+                              Barcode=p.Barcode
                            }).ToListAsync();
             return View(product);
         }
@@ -67,6 +68,7 @@ namespace SS1POS.Controllers
                     ProductName=product.ProductName,
                     ProductId= Guid.NewGuid(),
                     CategoryId=product.CategoryId,
+                    Barcode=product.Barcode,
                     Image= UploadImage(product)
                 };
                 _context.Product.Add(prod);
