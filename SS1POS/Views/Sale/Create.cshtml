@@ -75,6 +75,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(document).ready(function () {
+            $("#Discount").blur(function () {
+                GrandTotal();
+            });
             $("#search").keypress(function (e) {
                 if (e.which == 13) {
                     //check is product exist
@@ -89,6 +92,7 @@
                             $(this).closest("tr").find("td:eq(2)").text(Number(qty) + 1);
                             $(this).closest("tr").find("td:eq(3)").text((Number(qty) + 1) * Number(price));
                             b = true;
+                            CalculationPrice();
                         }
                         i++;
                     });
@@ -102,17 +106,57 @@
                                 row += "</td><td>" + data.price;
                                 row += "</td><td>" + 1;
                                 row += "</td><td>" + data.price;
-                                row += "</td><td></td></tr>";
+                                row += "</td><td><button class='btn btn-primary plus'>+</button>";
+                                row += " <button class='btn btn-warning minus'>-</button>";
+                                row += " <button class='btn btn-danger remove'>Rem</button></td></tr>";
                                 $("#saleList").append(row);
+                                CalculationPrice();
                             }, error: function (error) {
                                 console.log(error);
                             }
                         });
                     }
-                   
                     $("#search").val("");
                 }
             });
+            $("#saleList").on("click", ".remove", function () {
+                var $tr = $(this).closest('tr');
+                $tr.remove();
+                CalculationPrice();
+            });
+            $("#saleList").on("click", ".plus", function () {
+                var qty = $(this).closest("tr").find("td:eq(2)").text();
+                var price = $(this).closest("tr").find("td:eq(1)").text();
+                $(this).closest("tr").find("td:eq(2)").text(Number(qty) + 1);
+                $(this).closest("tr").find("td:eq(3)").text((Number(qty) + 1) * Number(price));
+                CalculationPrice();
+            });
+            $("#saleList").on("click", ".minus", function () {
+                var qty = $(this).closest("tr").find("td:eq(2)").text();
+                var price = $(this).closest("tr").find("td:eq(1)").text();
+                $(this).closest("tr").find("td:eq(2)").text(Number(qty) - 1);
+                $(this).closest("tr").find("td:eq(3)").text((Number(qty) - 1) * Number(price));
+                CalculationPrice();
+            });
         });
+        function CalculationPrice() {
+            var Total = 0;
+            $("#saleList > tbody > tr").each(function () {
+                var amount = $(this).closest("tr").find("td:eq(3)").text();
+                Total += Number(amount);
+            });
+            $("#Total").val(Total);
+            GrandTotal();
+        }
+        function GrandTotal() {
+            var total = $("#Total").val();
+            var discount = Number(total) * Number($("#Discount").val()) / 100;
+            $("#GrandTotal").val(Number(total) - discount);
+        }
+        function PlusQty() {
+            $('#saleList > tbody > tr').click(function () {
+                console.log($(this).index());
+            });
+        }
     </script>
 }
